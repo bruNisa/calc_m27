@@ -1,47 +1,58 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+
+const estado = reactive({
+  numero1,
+  numero2,
+  operacao,
+})
+
+const EfetuaCalculo = () => {
+  const { operacao } = estado;
+  
+  switch (operacao) {
+    case 'adicao':
+      return numero1 + numero2;
+    case 'subtracao':
+      return numero1 - numero2;
+    case 'multiplicacao':
+      return numero1 * numero2;
+    case 'divisao':
+      return numero1 / numero2;
+
+  }
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="container">
+    <header class="p-5 mb-4 mt-4 bg-light rounded-3">
+      <h1>Calculadora aritmética</h1>
+    </header>
+    <form @submit="EfetuaCalculo">
+      <div class="row">
+        <div class="col-2">
+          <input @change="evento => estado.numero1 = evento.target.value" required type="number" placeholder="Informe o 1º número" class="form-control" />
+        </div>
+        <div  @change="evento => estado.numero2 = evento.target.value" class="col-2">
+          <input required type="number" placeholder="Informe o 2º número" class="form-control" />
+        </div>
+        <div class="col-2">
+          <select @change="evento => estado.operacao = evento.target.value" class="form-control">
+            <option value="adicao">Adição</option>
+            <option value="subtracao">Subtração</option>
+            <option value="multiplicacao">Multiplicação</option>
+            <option value="divisao">Divisão</option>
+          </select>
+        </div>
+        <div class="col-1">
+          <button  class="btn btn-primary" type="submit">Calcular</button>
+        </div>
+        <div class="col-2">
+          <label class=" p-2 bg-light" for="">res</label>
+        </div>
+      </div>
+    </form>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
